@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<head>
+    <title>Web UI</title>
+    <style>
+        body {
+            background-image: url("Colors.gif");
+            background-repeat: no-repeat;
+            background-position: right top;
+            background-size: cover;
+            background-attachment: fixed;
+            align-content: center;
+        }
+        .contain {
+            background-color: rgba(255, 255, 255, 0.459);
+            border-radius: 15px;
+            border: 2px solid #292928;
+            padding: 10px; 
+            padding-left: 50px;
+            width: 60%;
+            height: 70px; 
+            margin: 5% 5% 0 5%; 
+        }
+        .contain2 {
+            background-color: rgba(0, 0, 0, 0.87);
+            color: rgb(255, 255, 255);
+            border-radius: 5px;
+            border: 2px solid #292928;
+            padding: 2%; 
+            width: 85%;
+            margin: 2% 5%; 
+            min-height: 300px;
+        }
+        input[type=text] {
+            background-color: #00000065;
+            color: white;
+            border: 3px solid #000000;
+            width: 40%;
+            border-radius: 5px;
+            font-family: cursive;
+            padding: 10px 15px;
+        }
+        input[placeholder="Enter Command Here"] {
+            color: white;
+        }
+        input[type=text]:focus {
+            background-color: black;
+        }
+        .button {
+            display: inline-block;
+            border-radius: 4px;
+            background-color: #000000;
+            border: none;
+            color: #FFFFFF;
+            text-align: center;
+            font-size: 20px;
+            padding: 10px;
+            width: 150px;
+            transition: all 0.5s;
+            cursor: pointer;
+            margin-left: 50px;
+            margin-top: 15px;
+        }
+
+        .button span {
+            cursor: pointer;
+            display: inline-block;
+             position: relative;
+            transition: 0.5s;
+        }
+
+        .button span:after {
+            content: '\00bb';
+            position: absolute;
+             opacity: 0;
+            top: 0;
+            right: -20px;
+            transition: 0.5s;
+        }
+
+        .button:hover span {
+            padding-right: 25px;
+        }
+
+        .button:hover span:after {
+            opacity: 1;
+            right: 0;
+    	}
+	img.img1 {
+            float: left; 
+            width: 10%; 
+            height: 10%; 
+            margin-top: 15px; 
+            margin-left: 15px; 
+            margin-right: -100px;
+        }
+    </style>
+</head>
+<body> 
+     <img src="https://media.giphy.com/media/WijZyAuUL3nOM/giphy.gif" class="img1">
+    <center>
+        <div style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; font-size: 50px; color: white; padding-top: 50px; text-shadow: 10px 10px 15px white;"> Web UI for Docker Implementation</div>
+    <div class="contain">
+        <div style=" font-family: Verdana, Geneva, Tahoma, sans-serif; ">
+                [root@localhost ~]# &nbsp; &NonBreakingSpace;<input type="text" id="inp" placeholder="Enter Command Here" onkeyup="typewrite()"> </input>
+                <button class="button" onclick="LinuxCommands()" id = "btn" ><span>Run</span></button>
+        </div>
+    </div>
+    </center>
+    <div class="contain2" > <div id="d2">[root@localhost ~]#</div><br>
+    <pre><div id = "d3"></div></pre>
+    </div>
+    <script>
+        y = document.getElementById('d2');
+        j = document.getElementById('inp');
+        function LinuxCommands() {
+            var i =document.getElementById("inp").value
+            var xhr =new XMLHttpRequest();
+            xhr.open("GET","http://192.168.225.53/cgi-bin/linux.py?x="+i,true);   //enter your OS ip in which apache server is installed here
+            xhr.send();
+            
+            // Get output from server
+            xhr.onload=function(){
+                var output = xhr.responseText;
+                document.getElementById("d3").innerHTML=output;
+            }
+        }
+
+        j.addEventListener("keyup", function(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            document.getElementById("btn").click();
+        }
+        });
+
+        function typewrite(){
+            y.innerHTML = "[root@localhost ~]#  "+j.value;
+        }
+        
+    </script>
+</body>
+</head>
